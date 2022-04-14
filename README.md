@@ -8,7 +8,7 @@ The purpose of this project is: **to teach you how deal with UNIX threads and th
 - pthread_create function allows you to create a thread in c
 - - `pthread_create(struct, params, function, args);`
 - - struct is where to store thread information and it defining like that `pthread_t thread_name`
-- - params is the parameters of the thread <strong style="font-family: Operator Mono">Since its a pointer we can pass it `NULL` and it will take default params</strong>
+- - params is the parameters of the thread <strong style="font-family: Operator Mono;color:#F64C6E;">Since its a pointer we can pass it `NULL` and it will take default params</strong>
 - - function is the function to excute with this thread
 - - args is the argument to pass to the function that will be excuted *We can set it to `NULL` if that function don't take arguments*
 
