@@ -11,7 +11,8 @@ Color_Off='\033[0m'       # Text Reset
 
 
 CC = gcc
-CFlags = -Wall -Wextra -Werror -pthread
+CFlags = -pthread
+LIBFT = -L ./assets/libft/ -lft
 
 SRC = ./src/main.c
 NAME = philo
@@ -19,5 +20,6 @@ NAME = philo
 all: $(NAME)
 
 $(NAME): $(SRC)
-	@$(CC) $(CFlags) $< -o $@
-	@echo $(BGreen)"Compiled successfuly ✅"
+	@make -C assets/libft/
+	@$(CC) $(CFlags) $(LIBFT) $< -o $@
+	@echo $(BGreen)"Compiled successfuly ✅"$(Color_Off)
