@@ -29,19 +29,28 @@ char recipe(t_data *data)
     return (0);
 }
 
-int main()
+
+int main(int ac, char **av)
 {
     t_data *data;
+    char    **arguments;
 
-    data = NULL;
-    data = (t_data *)ft_calloc(1, sizeof(t_data));
-    if (!data)
+    arguments = NULL;
+    arguments = parsing(ac, av);
+    if (!arguments)
         return (-1);
-    data->philos_len = 5;
-    data->time_to_die = 50000;
-    data->time_to_eat = 10000;
-    data->time_to_sleep = 10000;
-    if (recipe(data))
-        return(ft_putstr_fd("an error occurd", 2), -1);
+    int i = 0;
+    while (arguments[i])
+        printf("%s\n", arguments[i++]);
+    data = NULL;
+    // data = (t_data *)ft_calloc(1, sizeof(t_data));
+    // if (!data)
+    //     return (-1);
+    // data->philos_len = 5;
+    // data->time_to_die = 50000;
+    // data->time_to_eat = 10000;
+    // data->time_to_sleep = 10000;
+    // if (recipe(data))
+    //     return(ft_putstr_fd("an error occurd", 2), -1);
     return (0);
 }
