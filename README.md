@@ -40,3 +40,4 @@ The purpose of this project is: **to teach you how to deal with UNIX threads and
 - This sets the status of the child thread to detached, then after the thread runs All resources will be released automatically.
 
 ## Dining Philosopher Problem
+![alt text](https://upload.wikimedia.org/wikipedia/commons/7/7b/An_illustration_of_the_dining_philosophers_problem.png)
