@@ -9,7 +9,7 @@ BWhite='\033[1;37m'       # White
 # Reset
 Color_Off='\033[0m'       # Text Reset
 
-
+.PHONY: all clean fclean re
 CC = gcc
 CFlags = -pthread
 UTILS_SRC = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c \
@@ -40,9 +40,8 @@ $(NAME): $(UTILS) $(PARSING) $(ERRORS) $(LINKEDLIST) $(SRC)
 	@echo $(BGreen)"Compiled successfuly ✅"$(Color_Off)
 
 clean:
-	@make clean -C assets/libft/
 
 fclean: clean
-	@make fclean -C assets/libft/
 	@rm -f $(NAME);
 	@echo $(BRed)"Project cleaned successfuly"$(Color_Off)
+re: fclean all

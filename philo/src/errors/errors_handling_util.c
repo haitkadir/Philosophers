@@ -38,26 +38,6 @@ int	check_is_empty(int ac, char **av)
 	return (0);
 }
 
-int	check_dup(int ac, char **av)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < ac)
-	{
-		j = i + 1;
-		while (j < ac)
-		{
-			if (ft_atoi(av[i]) == ft_atoi(av[j]))
-				return (1);
-			j++;
-		}
-		i++;
-	}
-	return (0);
-}
-
 int	check_max_int(int ac, char **av)
 {
 	int	i;

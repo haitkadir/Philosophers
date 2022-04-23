@@ -82,7 +82,7 @@ char	**parsing(int ac, char **av)
 	args = NULL;
 	if (check_is_empty(ac, av))
 		return (\
-		ft_putstr_fd("\033[1;31mError:\033[4;31mEmpty argument\033[0m\n", 2),
+		ft_putstr_fd("\033[4;31mEmpty argument\033[0m\n", 2),
 			NULL);
 	args = join_args(ac, av);
 	if (handle_input_errs(arr_len(args), args))
