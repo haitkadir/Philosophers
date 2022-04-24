@@ -35,6 +35,7 @@ typedef struct s_thread
 	pthread_t       thread;
     pthread_mutex_t fork;
     int             state;
+    int             index;
     t_data          *data;
 	struct s_thread	*next;
 }	t_thread;
@@ -102,13 +103,13 @@ void        free_2d_arr(char **arr);
 /*----------------------------- LInked list functions ------------------------*/
 void        philoadd_back(t_thread **lst, t_thread *new);
 void        philodelone(t_thread *lst);
-t_thread	*philonew(t_data *data);
+t_thread	*philonew(t_data *data, int i);
 t_thread	*philolast(t_thread *lst);
 t_thread	*philolast(t_thread *lst);
 int         philosize(t_thread *lst);
 /*---------------------------------- Algo functions ---------------------------*/
 void    *routine(void *args);
-char    create_threads(t_data *args);
+t_thread    *create_threads(t_data *data);
 char    recipe(t_data *data);
 
 #endif

@@ -7,10 +7,12 @@ void    *routine(void *args)
     thread = (t_thread *)args;
     while (1)
     {
-        pthread_mutex_lock(&thread->fork);
-        printf("Start eating: %p\n", thread);
+        pthread_mutex_lock(&thread->prev->fork);
+        printf("philo:%d Start eating\n", thread->index);
+        usleep(200000);
         usleep(thread->data->time_to_eat);
         pthread_mutex_unlock(&thread->fork);
+        thread = thread->next;
     }
     return (NULL);
 }

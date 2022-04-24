@@ -30,7 +30,7 @@ UTILS = $(addprefix $(UTILSDIR), $(UTILS_SRC))
 LINKEDLIST = $(addprefix $(LINKEDLISTDIR), $(LINKEDLISTSRC))
 ERRORS = $(addprefix src/errors/, errors_handling_util.c errors_handling.c)
 PARSING = $(addprefix src/parsing/, parsing.c)
-SRC = $(addprefix src/, routine.c main.c)
+SRC = $(addprefix src/, routine.c recipe.c main.c)
 NAME = philo
 
 all: $(NAME)

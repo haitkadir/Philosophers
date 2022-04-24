@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "../../src/philo.h"
 
-t_thread	*philonew(t_data *data)
+t_thread	*philonew(t_data *data, int i)
 {
 	t_thread		*temp;
 
@@ -21,6 +21,7 @@ t_thread	*philonew(t_data *data)
 	temp->prev = temp;
 	pthread_mutex_init(&temp->fork, NULL);
 	temp->state = 1;
+	temp->index = i;
 	temp->data = data;
 	pthread_create(&temp->thread, NULL, &routine, (void *)temp);
 	temp->next = temp;

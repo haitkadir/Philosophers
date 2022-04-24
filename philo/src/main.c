@@ -18,33 +18,7 @@ static char help(char *arg)
     return (1);
 }
 
-char    create_threads(t_data *data)
-{
-    t_thread    *thread;
-    t_thread    *temp;
-    int         i;
 
-    thread = NULL;
-    i = 0;
-    while (i < data->philos_len)
-    {
-        temp = NULL;
-        temp = philonew(data);
-        if (!temp)
-            return (1);
-        philoadd_back(&thread, temp);
-        i++;
-    }
-    return (0);
-}
-
-char recipe(t_data *data)
-{
-    if (create_threads(data))
-        return (1);
-    
-    return (0);
-}
 
 static void fill_info(t_data *data, char **args)
 {
@@ -70,9 +44,6 @@ int main(int ac, char **av)
         args = parsing(ac, av);
         if (!args)
             return (-1);
-        int i = 0;
-        while (args[i])
-            printf("%d\n", ft_atoi(args[i++]));
         data = NULL;
         data = (t_data *)ft_calloc(1, sizeof(t_data));
         if (!data)
