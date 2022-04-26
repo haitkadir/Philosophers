@@ -23,6 +23,7 @@ t_thread	*philonew(t_data *data, int i)
 	temp->state = 1;
 	temp->index = i;
 	temp->data = data;
+	pthread_mutex_init(&temp->data->mutex, NULL);
 	pthread_create(&temp->thread, NULL, &routine, (void *)temp);
 	temp->next = temp;
 	return (temp);

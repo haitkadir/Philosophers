@@ -17,8 +17,9 @@
 # include <unistd.h>
 # include <pthread.h>
 # include <time.h>
+# include "../assets/ft_printf/ft_printf.h"
 
-# include <stdio.h>
+// # include <stdio.h>
 /*---------------------------------- Data struct ---------------------------*/
 typedef struct s_data
 {
@@ -27,6 +28,7 @@ typedef struct s_data
     int time_to_eat;
     int time_to_sleep;
     int number_of_meals;
+    pthread_mutex_t mutex;
 }   t_data;
 /*----------------------------- LInked list node -------------------------*/
 typedef struct s_thread
@@ -46,6 +48,7 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
+void    ft_usleep(unsigned long micros);
 void	*ft_memchr(const void *s, int c, size_t n);
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t count, size_t size);

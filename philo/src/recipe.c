@@ -26,7 +26,6 @@ char    join_threads(t_thread *thread)
     tail = thread->prev;
     while (1)
     {
-        printf("-----%d-----\n", thread->state);
         usleep(20000);
         pthread_join(thread->thread, NULL);
         if (thread == tail)
@@ -47,18 +46,5 @@ char recipe(t_data *data)
     if (join_threads(thread))
         return (1);
 
-
-    //     t_thread *tail;
-
-    // tail = thread->prev;
-    // while (1)
-    // {
-    //     printf("-----%d-----\n", thread->state);
-    //     usleep(20000);
-    //     if (thread == tail)
-    //         break ;
-    //     thread = thread->next;
-    // }
-    
     return (0);
 }

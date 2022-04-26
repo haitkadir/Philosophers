@@ -20,12 +20,13 @@ UTILS_SRC = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c \
 	ft_strmapi.c ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_strtrim.c \
 	ft_substr.c ft_tolower.c ft_toupper.c ft_lstadd_back.c ft_lstadd_front.c \
 	ft_lstlast.c ft_lstnew.c ft_lstsize.c ft_lstdelone.c ft_lstclear.c \
-	ft_lstiter.c ft_lstmap.c ft_atol.c
+	ft_lstiter.c ft_lstmap.c ft_atol.c ft_usleep.c
 
 LINKEDLISTDIR = assets/linked_list/
 UTILSDIR = assets/libft_funcs/
 LINKEDLISTSRC = philoadd_back.c philoclear.c philodelone.c philolast.c philonew.c philosize.c
 
+PRINTF = -L ./assets/ft_printf/ -lftprintf
 UTILS = $(addprefix $(UTILSDIR), $(UTILS_SRC))
 LINKEDLIST = $(addprefix $(LINKEDLISTDIR), $(LINKEDLISTSRC))
 ERRORS = $(addprefix src/errors/, errors_handling_util.c errors_handling.c)
@@ -36,12 +37,13 @@ NAME = philo
 all: $(NAME)
 
 $(NAME): $(UTILS) $(PARSING) $(ERRORS) $(LINKEDLIST) $(SRC)
-	@$(CC) $(CFlags) $(UTILS) $(PARSING) $(ERRORS) $(LINKEDLIST) $(SRC) -o $@
+	@make -C assets/ft_printf
+	@$(CC) $(CFlags) $(UTILS) $(PARSING) $(ERRORS) $(LINKEDLIST) $(PRINTF) $(SRC) -o $@
 	@echo $(BGreen)"Compiled successfuly ✅"$(Color_Off)
 
-clean:
-
-fclean: clean
+fclean:
+	@make fclean -C assets/ft_printf
 	@rm -f $(NAME);
 	@echo $(BRed)"Project cleaned successfuly"$(Color_Off)
+
 re: fclean all
