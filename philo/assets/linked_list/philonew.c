@@ -20,8 +20,9 @@ t_thread	*philonew(t_data *data, int i)
 		return (NULL);
 	temp->prev = temp;
 	pthread_mutex_init(&temp->fork, NULL);
-	temp->state = 1;
+	temp->state = Think;
 	temp->index = i;
+	temp->last_meal = ft_current_time();
 	temp->data = data;
 	pthread_mutex_init(&temp->data->mutex, NULL);
 	pthread_create(&temp->thread, NULL, &routine, (void *)temp);

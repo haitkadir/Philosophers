@@ -17,17 +17,27 @@
 # include <unistd.h>
 # include <pthread.h>
 # include <time.h>
+# include <sys/time.h>
+# include <stdio.h>
 # include "../assets/ft_printf/ft_printf.h"
 
-// # include <stdio.h>
 /*---------------------------------- Data struct ---------------------------*/
+typedef enum state
+{
+    Died,
+    Eat,
+    Think,
+    Sleep
+}    t_state;
+
 typedef struct s_data
 {
-    int philos_len;
-    int time_to_die;
-    int time_to_eat;
-    int time_to_sleep;
-    int number_of_meals;
+    int             philos_len;
+    int             time_to_die;
+    int             time_to_eat;
+    int             time_to_sleep;
+    int             number_of_meals;
+    long            start_time;
     pthread_mutex_t mutex;
 }   t_data;
 /*----------------------------- LInked list node -------------------------*/
@@ -36,9 +46,11 @@ typedef struct s_thread
 	struct s_thread	*prev;
 	pthread_t       thread;
     pthread_mutex_t fork;
-    int             state;
+    t_state         state;
     int             index;
+    int             meals;
     t_data          *data;
+    long            last_meal;
 	struct s_thread	*next;
 }	t_thread;
 /*----------------------------------- Utils ------------------------------*/
@@ -48,6 +60,7 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
+long    ft_current_time(void);
 void    ft_usleep(unsigned long micros);
 void	*ft_memchr(const void *s, int c, size_t n);
 void	ft_bzero(void *s, size_t n);
@@ -111,6 +124,11 @@ t_thread	*philolast(t_thread *lst);
 t_thread	*philolast(t_thread *lst);
 int         philosize(t_thread *lst);
 /*---------------------------------- Algo functions ---------------------------*/
+void thinking(t_thread *thread);
+void eating(t_thread *thread);
+void sleeping(t_thread *thread);
+void take_fork(t_thread *thread, int x);
+void put_fork(t_thread *thread, int x);
 void    *routine(void *args);
 t_thread    *create_threads(t_data *data);
 char    recipe(t_data *data);

@@ -20,7 +20,7 @@ UTILS_SRC = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c \
 	ft_strmapi.c ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_strtrim.c \
 	ft_substr.c ft_tolower.c ft_toupper.c ft_lstadd_back.c ft_lstadd_front.c \
 	ft_lstlast.c ft_lstnew.c ft_lstsize.c ft_lstdelone.c ft_lstclear.c \
-	ft_lstiter.c ft_lstmap.c ft_atol.c ft_usleep.c
+	ft_lstiter.c ft_lstmap.c ft_atol.c ft_usleep.c ft_current_time.c
 
 LINKEDLISTDIR = assets/linked_list/
 UTILSDIR = assets/libft_funcs/
@@ -31,7 +31,7 @@ UTILS = $(addprefix $(UTILSDIR), $(UTILS_SRC))
 LINKEDLIST = $(addprefix $(LINKEDLISTDIR), $(LINKEDLISTSRC))
 ERRORS = $(addprefix src/errors/, errors_handling_util.c errors_handling.c)
 PARSING = $(addprefix src/parsing/, parsing.c)
-SRC = $(addprefix src/, routine.c recipe.c main.c)
+SRC = $(addprefix src/, routine.c routine_util.c recipe.c main.c)
 NAME = philo
 
 all: $(NAME)

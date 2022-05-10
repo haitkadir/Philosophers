@@ -26,6 +26,7 @@ static void fill_info(t_data *data, char **args)
     data->time_to_die = ft_atoi(args[1]);
     data->time_to_eat = ft_atoi(args[2]);
     data->time_to_sleep = ft_atoi(args[3]);
+    data->start_time = ft_current_time();
     if (arr_len(args) > 4)
         data->number_of_meals = ft_atoi(args[4]);
     free_2d_arr(args);

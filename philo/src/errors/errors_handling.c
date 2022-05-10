@@ -12,6 +12,20 @@
 
 #include "../philo.h"
 
+static char check_negative(char **args, int len)
+{
+	int i;
+
+	i = 0;
+	while (i < len)
+	{
+		if (args[i][0] == '-')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int	handle_input_errs(int len, char **args)
 {
 	if (!args)
@@ -21,6 +35,8 @@ int	handle_input_errs(int len, char **args)
 		ft_putstr_fd("\033[4;31mNone integer value\033[0m\n", 2), 1);
 	if (check_max_int(len, args))
 		return (ft_putstr_fd("\033[4;31mInt overflow\033[0m\n", 2), 1);
+	if (check_negative(args, len))
+		return (ft_putstr_fd("\033[4;31mNegative number\033[0m\n", 2), 1);
 	if (len < 4 || len > 5)
 	{
 		return (\

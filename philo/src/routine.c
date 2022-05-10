@@ -6,26 +6,19 @@ void    *routine(void *args)
     int       philo;
     
     thread = (t_thread *)args;
-    while (1)
+    if(thread->index % 2)
+        usleep(100);
+    while (thread->state)
     {
-        pthread_mutex_lock(&thread->data->mutex);
-        ft_printf("philo:%d thinking ...\n", thread->index);
-        // thread->state = 1;
-        pthread_mutex_lock(&thread->fork);
-        ft_printf("philo:%d has taken a fork\n", thread->index);
-        pthread_mutex_lock(&thread->next->fork);
-        ft_printf("philo:%d has taken a fork\n", thread->index);
-        ft_printf("philo:%d Start eating ...\n", thread->index);
-        // thread->state = 2;
-        ft_usleep(thread->data->time_to_eat);
-        pthread_mutex_unlock(&thread->fork);
-        pthread_mutex_unlock(&thread->next->fork);
+        take_fork(thread, thread->index);
+        take_fork(thread->next, thread->index);
+        eating(thread);
 
-        ft_printf("philo:%d sleeping ...\n", thread->index);
-        // thread->state = 3;
-        ft_usleep(thread->data->time_to_sleep);
-        thread = thread->next;
-        pthread_mutex_unlock(&thread->data->mutex);
+        put_fork(thread->next, thread->index);
+        put_fork(thread, thread->index);
+
+        sleeping(thread);
+        thinking(thread);
     }
     return (NULL);
 }
