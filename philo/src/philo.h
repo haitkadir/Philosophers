@@ -36,7 +36,9 @@ typedef struct s_data
     int             time_to_die;
     int             time_to_eat;
     int             time_to_sleep;
-    int             number_of_meals;
+    int             meals;
+    int             total_meals;
+    char            state;
     long            start_time;
     pthread_mutex_t mutex;
 }   t_data;
@@ -124,13 +126,15 @@ t_thread	*philolast(t_thread *lst);
 t_thread	*philolast(t_thread *lst);
 int         philosize(t_thread *lst);
 /*---------------------------------- Algo functions ---------------------------*/
-void thinking(t_thread *thread);
-void eating(t_thread *thread);
-void sleeping(t_thread *thread);
-void take_fork(t_thread *thread, int x);
-void put_fork(t_thread *thread, int x);
-void    *routine(void *args);
-t_thread    *create_threads(t_data *data);
-char    recipe(t_data *data);
+void        print_state(t_thread *thread, int time, int i, char *state);
+void        thinking(t_thread *thread);
+void        eating(t_thread *thread);
+void        sleeping(t_thread *thread);
+void        take_fork(t_thread *thread, int index);
+void        put_fork(t_thread *thread);
+void        *routine(void *args);
 
+t_thread    *create_threads(t_data *data);
+void        check_philos(t_thread *thread);
+char        recipe(t_data *data);
 #endif

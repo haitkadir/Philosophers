@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: haitkadi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/11 18:42:22 by haitkadi          #+#    #+#             */
+/*   Updated: 2022/05/11 18:42:25 by haitkadi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 static char help(char *arg)
@@ -28,7 +40,7 @@ static void fill_info(t_data *data, char **args)
     data->time_to_sleep = ft_atoi(args[3]);
     data->start_time = ft_current_time();
     if (arr_len(args) > 4)
-        data->number_of_meals = ft_atoi(args[4]);
+        data->meals = ft_atoi(args[4]);
     free_2d_arr(args);
 }
 

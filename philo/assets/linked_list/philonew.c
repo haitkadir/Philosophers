@@ -24,6 +24,7 @@ t_thread	*philonew(t_data *data, int i)
 	temp->index = i;
 	temp->last_meal = ft_current_time();
 	temp->data = data;
+	temp->data->state = 1;
 	pthread_mutex_init(&temp->data->mutex, NULL);
 	pthread_create(&temp->thread, NULL, &routine, (void *)temp);
 	temp->next = temp;

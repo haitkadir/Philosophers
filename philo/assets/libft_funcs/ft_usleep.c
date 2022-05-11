@@ -7,7 +7,7 @@ void ft_usleep(unsigned long micros)
 
     max_usleep = 1000000 - 1;
 
-    while(micros > 0)
+    while (micros > 0)
     {
         if (micros > max_usleep)
             chunk = max_usleep;
