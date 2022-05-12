@@ -11,7 +11,7 @@ Color_Off='\033[0m'       # Text Reset
 
 .PHONY: all clean fclean re
 CC = gcc
-CFlags = -pthread
+CFlags = -Wall -Wextra -Werror -pthread
 UTILS_SRC = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c \
 	ft_isascii.c ft_isdigit.c ft_isprint.c ft_itoa.c ft_memchr.c ft_memcmp.c \
 	ft_memcpy.c ft_memmove.c ft_memset.c ft_putchar_fd.c ft_putendl_fd.c \
@@ -23,26 +23,23 @@ UTILS_SRC = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c \
 	ft_lstiter.c ft_lstmap.c ft_atol.c ft_usleep.c ft_current_time.c
 
 LINKEDLISTDIR = assets/linked_list/
-UTILSDIR = assets/libft_funcs/
-LINKEDLISTSRC = philoadd_back.c philoclear.c philodelone.c philolast.c philonew.c philosize.c
+UTILSDIR = 		assets/libft_funcs/
+LINKEDLISTSRC = philoadd_back.c philolast.c philonew.c philosize.c
 
-PRINTF = -L ./assets/ft_printf/ -lftprintf
-UTILS = $(addprefix $(UTILSDIR), $(UTILS_SRC))
+UTILS =		 $(addprefix $(UTILSDIR), $(UTILS_SRC))
 LINKEDLIST = $(addprefix $(LINKEDLISTDIR), $(LINKEDLISTSRC))
-ERRORS = $(addprefix src/errors/, errors_handling_util.c errors_handling.c)
-PARSING = $(addprefix src/parsing/, parsing.c)
-SRC = $(addprefix src/, routine.c routine_util.c recipe.c main.c)
-NAME = philo
+ERRORS =	 $(addprefix src/errors/, errors_handling_util.c errors_handling.c)
+PARSING =	 $(addprefix src/parsing/, parsing.c)
+SRC =		 $(addprefix src/, routine.c routine_util.c recipe.c main.c)
+NAME =		 philo
 
 all: $(NAME)
 
 $(NAME): $(UTILS) $(PARSING) $(ERRORS) $(LINKEDLIST) $(SRC)
-	@make -C assets/ft_printf
-	@$(CC) $(CFlags) $(UTILS) $(PARSING) $(ERRORS) $(LINKEDLIST) $(PRINTF) $(SRC) -o $@
+	@$(CC) $(CFlags) $(UTILS) $(PARSING) $(ERRORS) $(LINKEDLIST) $(SRC) -o $@
 	@echo $(BGreen)"Compiled successfuly ✅"$(Color_Off)
 
 fclean:
-	@make fclean -C assets/ft_printf
 	@rm -f $(NAME);
 	@echo $(BRed)"Project cleaned successfuly"$(Color_Off)
 

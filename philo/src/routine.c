@@ -12,25 +12,35 @@
 
 #include "philo.h"
 
-void    *routine(void *args)
+void	print_state(t_thread *thread, int time, int index, char *state)
 {
-    t_thread  *thread;
-    int       philo;
-    
-    thread = (t_thread *)args;
-    if(thread->index % 2)
-        usleep(100);
-    while (thread->data->state)
-    {
-        take_fork(thread, thread->index);
-        take_fork(thread->next, thread->index);
-        eating(thread);
+	if (thread->data->state)
+	{
+		pthread_mutex_lock(&thread->data->mutex);
+		printf("\033[1;34m%d ms| \033[1;32m%d \033[1;35m%s\033[0m\n", \
+		time, index, state);
+		pthread_mutex_unlock(&thread->data->mutex);
+	}
+}
 
-        put_fork(thread->next);
-        put_fork(thread);
+/*----------------------------------------------------------------------------*/
 
-        sleeping(thread);
-        thinking(thread);
-    }
-    return (NULL);
+void	*routine(void *args)
+{
+	t_thread	*thread;
+
+	thread = (t_thread *)args;
+	if (thread->index % 2)
+		usleep(100);
+	while (thread->data->state)
+	{
+		take_fork(thread, thread->index);
+		take_fork(thread->next, thread->index);
+		eating(thread);
+		put_fork(thread->next);
+		put_fork(thread);
+		sleeping(thread);
+		thinking(thread);
+	}
+	return (NULL);
 }

@@ -12,9 +12,9 @@
 
 #include "../philo.h"
 
-static char check_negative(char **args, int len)
+static	char	check_negative(char **args, int len)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < len)
@@ -37,6 +37,10 @@ int	handle_input_errs(int len, char **args)
 		return (ft_putstr_fd("\033[4;31mInt overflow\033[0m\n", 2), 1);
 	if (check_negative(args, len))
 		return (ft_putstr_fd("\033[4;31mNegative number\033[0m\n", 2), 1);
+	if (ft_atoi(args[0]) == 0)
+		return (ft_putstr_fd("\033[4;31mAt least one philo\033[0m\n", 2), 1);
+	if (len == 5 && ft_atoi(args[4]) == 0)
+		return (ft_putstr_fd("\033[4;31mAt least one meal\033[0m\n", 2), 1);
 	if (len < 4 || len > 5)
 	{
 		return (\
