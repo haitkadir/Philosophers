@@ -41,3 +41,21 @@ The purpose of this project is: **to teach you how to deal with UNIX threads and
 
 ## Dining Philosopher Problem
 ![alt text](https://upload.wikimedia.org/wikipedia/commons/7/7b/An_illustration_of_the_dining_philosophers_problem.png)
+
+- Eache philosopher has a fork next to him
+- To start eating eache philosopher needs tow forks
+- You have to avoid died lock
+## Bonus part
+- It's like mandatory part except we must use `processes` instead of `threads`
+- and `semaphors` instead of mutexes
+- and the forks are in the middle of the table
+### Functions to use 
+- `fork` used to create chiled processes
+- `waitpid` used to wait for specefic process until it complates it's excution 
+- `kill` used to kill a specific process
+- 
+
+memset, printf, malloc, free, write, fork, kill,
+exit, pthread_create, pthread_detach, pthread_join,
+usleep, gettimeofday, waitpid, sem_open, sem_close,
+sem_post, sem_wait, sem_unlink
