@@ -123,7 +123,7 @@ void		take_fork(t_thread *thread, int index);
 void		put_fork(t_thread *thread);
 void		*routine(void *args);
 
-t_thread	*create_threads(t_data *data);
+char		create_processes(t_data *data);
 void		check_philos(t_thread *thread);
 char		recipe(t_data *data);
 #endif

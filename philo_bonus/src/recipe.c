@@ -12,24 +12,24 @@
 
 #include "philo.h"
 
-t_thread	*create_threads(t_data *data)
+char	create_processes(t_data *data)
 {
-	t_thread	*thread;
-	t_thread	*temp;
 	int			i;
+	pid_t		philos[data->philos_len];
 
-	thread = NULL;
+
 	i = 0;
 	while (i < data->philos_len)
 	{
-		temp = NULL;
-		temp = philonew(data, i + 1);
-		if (!temp)
-			return (NULL);
-		philoadd_back(&thread, temp);
+
+		philos[i] = fork();
+		if (philos[i] == -1)
+			return (1);
+		if (philos[i] == 0)
+			break ;
 		i++;
 	}
-	return (thread);
+	return (0);
 }
 
 /*----------------------------------------------------------------------------*/
@@ -98,15 +98,14 @@ void	free_data(t_thread *thread, t_data *data)
 
 char	recipe(t_data *data)
 {
-	t_thread	*thread;
 
-	thread = NULL;
-	thread = create_threads(data);
-	if (thread == NULL)
+	if (create_processes(data))
 		return (1);
-	check_philos(thread);
-	if (join_threads(thread))
-		return (1);
-	free_data(thread, data);
+	printf("---- It's working---- %d\n", data->philos_len);
+	
+	// check_philos(thread);
+	// if (join_threads(thread))
+	// 	return (1);
+	// free_data(thread, data);
 	return (0);
 }
