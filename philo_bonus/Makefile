@@ -22,12 +22,10 @@ UTILS_SRC = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c \
 	ft_lstlast.c ft_lstnew.c ft_lstsize.c ft_lstdelone.c ft_lstclear.c \
 	ft_lstiter.c ft_lstmap.c ft_atol.c ft_usleep.c ft_current_time.c
 
-LINKEDLISTDIR = assets/linked_list/
 UTILSDIR = 		assets/libft_funcs/
 LINKEDLISTSRC = philoadd_back.c philolast.c philonew.c philosize.c
 
 UTILS =		 $(addprefix $(UTILSDIR), $(UTILS_SRC))
-LINKEDLIST = $(addprefix $(LINKEDLISTDIR), $(LINKEDLISTSRC))
 ERRORS =	 $(addprefix src/errors/, errors_handling_util.c errors_handling.c)
 PARSING =	 $(addprefix src/parsing/, parsing.c)
 SRC =		 $(addprefix src/, routine.c routine_util.c recipe.c main.c)
@@ -36,7 +34,7 @@ NAME =		 philo_bonus
 all: $(NAME)
 
 $(NAME): $(UTILS) $(PARSING) $(ERRORS) $(LINKEDLIST) $(SRC)
-	@$(CC) $(CFlags) $(UTILS) $(PARSING) $(ERRORS) $(LINKEDLIST) $(SRC) -o $@
+	@$(CC) $(CFlags) $(UTILS) $(PARSING) $(ERRORS) $(SRC) -o $@
 	@echo $(BGreen)"Compiled successfuly ✅"$(Color_Off)
 
 fclean:

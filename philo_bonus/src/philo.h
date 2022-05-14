@@ -16,6 +16,7 @@
 # include <limits.h>
 # include <unistd.h>
 # include <pthread.h>
+# include <semaphore.h>
 # include <time.h>
 # include <sys/time.h>
 # include <stdio.h>
@@ -30,20 +31,13 @@ typedef struct s_data
 	int				total_meals;
 	char			state;
 	long			start_time;
-	pthread_mutex_t	mutex;
-}	t_data;
-/*----------------------------- LInked list node -------------------------*/
-typedef struct s_thread
-{
-	struct s_thread	*prev;
-	pthread_t		thread;
-	pthread_mutex_t	fork;
+	pid_t			*philos;
 	int				index;
-	int				meals;
-	t_data			*data;
-	long			last_meal;
-	struct s_thread	*next;
-}	t_thread;
+	sem_t			*mutex;
+	sem_t			*mutex_print;
+	int				last_meal;
+}	t_data;
+
 /*----------------------------------- Utils ------------------------------*/
 typedef struct s_list
 {
@@ -107,23 +101,17 @@ int			check_max_int(int ac, char **av);
 int			check_dup(int ac, char **av);
 int			check_is_empty(int ac, char **av);
 void		free_2d_arr(char **arr);
-/*----------------------------- LInked list functions ------------------------*/
-void		philoadd_back(t_thread **lst, t_thread *new);
-void		philodelone(t_thread *lst);
-t_thread	*philonew(t_data *data, int i);
-t_thread	*philolast(t_thread *lst);
-t_thread	*philolast(t_thread *lst);
-int			philosize(t_thread *lst);
+
 /*---------------------------------- Algo functions --------------------------*/
-void		print_state(t_thread *thread, int time, int i, char *state);
-void		thinking(t_thread *thread);
-void		eating(t_thread *thread);
-void		sleeping(t_thread *thread);
-void		take_fork(t_thread *thread, int index);
-void		put_fork(t_thread *thread);
-void		*routine(void *args);
+void		print_state(t_data *data, int time, int i, char *state);
+void		thinking(t_data *data);
+void		eating(t_data *data);
+void		sleeping(t_data *data);
+void		take_fork(t_data *data);
+void		put_fork(t_data *data);
+void		routine(t_data *data);
 
 char		create_processes(t_data *data);
-void		check_philos(t_thread *thread);
+// void		check_philos(t_thread *thread);
 char		recipe(t_data *data);
 #endif
