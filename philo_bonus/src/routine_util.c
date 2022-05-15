@@ -17,7 +17,7 @@ void	thinking(t_data *data)
 	int	time;
 
 	time = (int)(ft_current_time() - data->start_time);
-	print_state(data, time, data->index, "is thinkin");
+	print_state(data, time, data->index, "is thinking");
 }
 
 /*----------------------------------------------------------------------------*/
@@ -26,13 +26,11 @@ void	eating(t_data *data)
 {
 	int	time;
 
-	data->last_meal = ft_current_time();
 	time = (int)(ft_current_time() - data->start_time);
 	print_state(data, time, data->index, "is eating");
+	data->last_meal = ft_current_time();
 	ft_usleep(data->time_to_eat * 1000);
-	data->meals++;
-	if (data->meals == data->meals)
-		data->total_meals++;
+	data->total_meals++;
 }
 
 /*----------------------------------------------------------------------------*/

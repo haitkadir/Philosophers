@@ -19,8 +19,18 @@
 # include <semaphore.h>
 # include <time.h>
 # include <sys/time.h>
+# include <signal.h>
 # include <stdio.h>
+
+/*------------------------------------- Enums ------------------------------*/
+
+typedef enum e_exit_status {
+	HAS_DIED = 1,
+	HAS_EATEN = 2,
+}	t_exit_status;
+
 /*---------------------------------- Data struct ---------------------------*/
+
 typedef struct s_data
 {
 	int				philos_len;
@@ -28,17 +38,19 @@ typedef struct s_data
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				meals;
-	int				total_meals;
 	char			state;
+	// pid_t			*philos;
+	int				total_meals;
+	long			last_meal;
 	long			start_time;
-	pid_t			*philos;
 	int				index;
 	sem_t			*mutex;
 	sem_t			*mutex_print;
-	int				last_meal;
+	pthread_t		thread;
 }	t_data;
 
 /*----------------------------------- Utils ------------------------------*/
+
 typedef struct s_list
 {
 	void			*content;
@@ -48,53 +60,33 @@ typedef struct s_list
 long		ft_current_time(void);
 long		ft_atol(const char *str);
 void		ft_usleep(unsigned long micros);
-void		*ft_memchr(const void *s, int c, size_t n);
 void		ft_bzero(void *s, size_t n);
 void		*ft_calloc(size_t count, size_t size);
-void		*ft_memcpy(void *dst, const void *src, size_t n);
-void		*ft_memmove(void *dst, const void *src, size_t len);
-void		*ft_memset(void *b, int c, size_t len);
-void		ft_striteri(char *s, void (*f)(unsigned int, char *));
-void		ft_putchar_fd(char c, int fd);
 void		ft_putstr_fd(char *s, int fd);
-void		ft_putendl_fd(char *s, int fd);
-void		ft_putnbr_fd(int n, int fd);
 void		ft_lstadd_back(t_list **lst, t_list *new);
 void		ft_lstdelone(t_list *lst, void (*del)(void *));
 void		ft_lstclear(t_list **lst, void (*del)(void *));
 void		ft_lstiter(t_list *lst, void (*f)(void *));
-void		ft_lstadd_front(t_list **lst, t_list *new);
 char		*ft_strchr(const char *s, int c);
 char		*ft_strdup(const char *s1);
 char		*ft_strjoin(char const *s1, char const *s2);
-char		*ft_strnstr(const char *haystack, const char *needle, size_t len);
-char		*ft_strrchr(const char *s, int c);
-char		*ft_strtrim(char const *s1, char const *set);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 char		**ft_split(char const *s, char c);
-char		*ft_itoa(int n);
-char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 int			ft_atoi(const char *str);
-int			ft_isalnum(int c);
-int			ft_isalpha(int c);
-int			ft_isascii(int c);
 int			ft_isdigit(int c);
-int			ft_isprint(int c);
-int			ft_memcmp(const void *s1, const void *s2, size_t n);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
-int			ft_tolower(int c);
-int			ft_toupper(int c);
 int			ft_lstsize(t_list *lst);
 t_list		*ft_lstnew(void *content);
 t_list		*ft_lstlast(t_list *lst);
-t_list		*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 size_t		ft_strlen(const char *s);
-size_t		ft_strlcat(char *dst, const char *src, size_t dstsize);
-size_t		ft_strlcpy(char *dst, const char *src, size_t dstsize);
+
 /*------------------------------------ Parsing -------------------------------*/
+
 char		**parsing(int ac, char **av);
 int			arr_len(char **arr);
+
 /*-------------------------------- Errors checking ---------------------------*/
+
 int			handle_input_errs(int len, char **args);
 int			check_is_number(int ac, char **av);
 int			check_max_int(int ac, char **av);
@@ -103,6 +95,7 @@ int			check_is_empty(int ac, char **av);
 void		free_2d_arr(char **arr);
 
 /*---------------------------------- Algo functions --------------------------*/
+
 void		print_state(t_data *data, int time, int i, char *state);
 void		thinking(t_data *data);
 void		eating(t_data *data);
@@ -110,8 +103,8 @@ void		sleeping(t_data *data);
 void		take_fork(t_data *data);
 void		put_fork(t_data *data);
 void		routine(t_data *data);
+void		*child_routine(void *arg);
 
 char		create_processes(t_data *data);
-// void		check_philos(t_thread *thread);
 char		recipe(t_data *data);
 #endif

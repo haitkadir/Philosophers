@@ -15,118 +15,67 @@
 char	create_processes(t_data *data)
 {
 	int			i;
+	pid_t		*philos;
 
-	data->philos = (pid_t *)ft_calloc(data->philos_len, sizeof(pid_t));
+	philos = 0;
+	philos = (pid_t *)ft_calloc(data->philos_len, sizeof(pid_t));
+	if (!philos)
+		return (1);
+	system("leaks philo_bonus");
 	i = 0;
-	sem_unlink("mutex");
-	data->mutex = sem_open("mutex", O_CREAT, 0644, data->philos_len);
-	if (data->mutex == SEM_FAILED)
-		return (1);
-	sem_unlink("mutex_print");
-	data->mutex_print = sem_open("mutex_print", O_CREAT, 0644, 1);
-	if (data->mutex_print == SEM_FAILED)
-		return (1);
 	while (i < data->philos_len)
 	{
-		data->philos[i] = fork();
-		if (data->philos[i] == -1)
-			return (1);
-		else if (data->philos[i] == 0)
+		philos[i] = fork();
+		if (philos[i] == -1)
+			return (free(philos), 1);
+		else if (philos[i] == 0)
 		{
 			data->index = i + 1;
+			data->last_meal = ft_current_time();
+			pthread_create(&data->thread, NULL, &child_routine, (void *)data);
+			pthread_detach(data->thread);
 			routine(data);
 			break ;
 		}
 		i++;
 	}
-	while (1)
-		;
+	if (philos)
+		free(philos);
 	return (0);
 }
 
 /*----------------------------------------------------------------------------*/
 
-// char	join_threads(t_thread *thread)
-// {
-// 	t_thread	*tail;
-
-// 	tail = thread->prev;
-// 	while (1)
-// 	{
-// 		pthread_detach(thread->thread);
-// 		if (thread == tail)
-// 			break ;
-// 		thread = thread->next;
-// 	}
-// 	return (0);
-// }
-
-/*----------------------------------------------------------------------------*/
-
-// void	check_philos(t_thread *thread)
-// {
-// 	int	time;
-
-// 	while (1)
-// 	{
-// 		time = (int)(ft_current_time() - thread->data->start_time);
-// 		if ((ft_current_time() - thread->last_meal) > thread->data->time_to_die)
-// 		{
-// 			thread->data->state = 0;
-// 			printf("%d ms| %d died\n", time, thread->index);
-// 			break ;
-// 		}
-// 		if (thread->data->total_meals == thread->data->philos_len)
-// 		{
-// 			thread->data->state = 0;
-// 			break ;
-// 		}
-// 		thread = thread->next;
-// 		usleep(500);
-// 	}
-// }
-
-/*----------------------------------------------------------------------------*/
-
-// void	free_data(t_thread *thread, t_data *data)
-// {
-// 	int			i;
-// 	t_thread	*tmp;
-
-// 	i = 0;
-// 	while (i < data->philos_len)
-// 	{
-// 		tmp = thread;
-// 		pthread_mutex_destroy(&tmp->fork);
-// 		free(tmp);
-// 		thread = thread->next;
-// 		i++;
-// 	}
-// 	pthread_mutex_destroy(&data->mutex);
-// 	free(data);
-// }
+static	void	destroy_data(t_data *data)
+{
+	sem_close(data->mutex);
+	sem_close(data->mutex_print);
+}
 
 /*----------------------------------------------------------------------------*/
 
 char	recipe(t_data *data)
 {
-	// int i;
+	int	status;
+	int	philos_has_eaten;
+	int	has_died_flag;
 
+	has_died_flag = 0;
 	if (create_processes(data))
-		{
-			printf("ERROR\n");
-			return (1);
-		}
-	// i = 0;
-	// while (i < data->philos_len)
-	// {
-	// 	if (data->philos[i] == 0)
-	// 	{
-	// 		data->index = i + 1;
-	// 		routine(data);
-	// 		break ;
-	// 	}
-	// 	i++;
-	// }
+		return (ft_putstr_fd("ERROR\n", 2), 1);
+	philos_has_eaten = 0;
+	while (has_died_flag == 0 && philos_has_eaten != data->philos_len)
+	{
+		waitpid(-1, &status, 0);
+		if (WEXITSTATUS(status) == HAS_DIED)
+			has_died_flag = 1;
+		else if (WEXITSTATUS(status) == HAS_EATEN)
+			++philos_has_eaten;
+		usleep(500);
+	}
+	write(1, "\033[30m", 5);
+	destroy_data(data);
+	if (has_died_flag)
+		kill(0, SIGKILL);
 	return (0);
 }
