@@ -61,7 +61,8 @@ void	check_philos(t_thread *thread)
 		if ((ft_current_time() - thread->last_meal) > thread->data->time_to_die)
 		{
 			thread->data->state = 0;
-			printf("%d ms| %d died\n", time, thread->index);
+			printf("\033[1;34m%d ms| \033[1;32m%d \033[1;33mdied\033[0m\n", \
+			time, thread->index);
 			break ;
 		}
 		if (thread->data->total_meals == thread->data->philos_len)
