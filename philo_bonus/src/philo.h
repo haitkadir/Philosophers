@@ -39,7 +39,6 @@ typedef struct s_data
 	int				time_to_sleep;
 	int				meals;
 	char			state;
-	// pid_t			*philos;
 	int				total_meals;
 	long			last_meal;
 	long			start_time;

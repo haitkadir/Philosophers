@@ -21,7 +21,6 @@ char	create_processes(t_data *data)
 	philos = (pid_t *)ft_calloc(data->philos_len, sizeof(pid_t));
 	if (!philos)
 		return (1);
-	system("leaks philo_bonus");
 	i = 0;
 	while (i < data->philos_len)
 	{
@@ -39,9 +38,7 @@ char	create_processes(t_data *data)
 		}
 		i++;
 	}
-	if (philos)
-		free(philos);
-	return (0);
+	return (free(philos), 0);
 }
 
 /*----------------------------------------------------------------------------*/
@@ -70,7 +67,7 @@ char	recipe(t_data *data)
 		if (WEXITSTATUS(status) == HAS_DIED)
 			has_died_flag = 1;
 		else if (WEXITSTATUS(status) == HAS_EATEN)
-			++philos_has_eaten;
+			philos_has_eaten++;
 		usleep(500);
 	}
 	write(1, "\033[30m", 5);

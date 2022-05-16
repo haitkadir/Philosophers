@@ -12,6 +12,7 @@
 
 BRed='\033[1;31m'         # Red
 BGreen='\033[1;32m'       # Green
+BBlue='\033[1;34m'        # Blue
 BYellow='\033[1;33m'      # Yellow
 Color_Off='\033[0m'       # Text Reset
 
@@ -60,7 +61,7 @@ all: banner $(NAME)
 banner:
 	@clear
 	@echo "\n"
-	@echo $(BRed)"$$HEADER"$(Color_Off)
+	@echo $(BBlue)"$$HEADER"$(Color_Off)
 	@echo $(BYellow)"                                 Coded by Hssain Aitkadir\n"$(Color_Off)
 
 $(NAME): $(UTILS) $(PARSING) $(ERRORS) $(LINKEDLIST) $(SRC)
